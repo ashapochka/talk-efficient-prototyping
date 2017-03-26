@@ -1,3 +1,4 @@
+import svgwrite
 from invoke import task
 
 
@@ -6,7 +7,7 @@ def build(ctx):
     ctx.run('pandoc -t revealjs -s talk-efficient-prototyping.md -o '
             'talk-efficient-prototyping.html '
             '-V revealjs-url=. -V theme=white')
-    ctx.run('open http://localhost:8000/talk-efficient-prototyping.html')
+    # ctx.run('open http://localhost:8000/talk-efficient-prototyping.html')
 
 
 @task

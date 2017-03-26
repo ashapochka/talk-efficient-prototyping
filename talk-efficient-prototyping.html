@@ -11,6 +11,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="./css/reveal.css">
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
   <link rel="stylesheet" href="./css/theme/white.css" id="theme">
   <!-- Printing and PDF exports -->
   <script>
@@ -34,38 +71,123 @@
   <p class="date">March 30, 2017</p>
 </section>
 
-<section><section id="challenge" class="titleslide slide level1"><h1>Challenge</h1></section><section id="starting-project-for-client" class="slide level2">
+<section><section id="challenge" class="titleslide slide level1"><h1>Challenge</h1></section><section id="what-clients-want" class="slide level2">
+<h2>What Clients Want</h2>
+<figure>
+<img src="images/what-clients-want-value.jpg" alt="Peace of Mind! Bang for The Buck! Feel in Control!" /><figcaption>Peace of Mind! Bang for The Buck! Feel in Control!</figcaption>
+</figure>
+</section><section id="starting-project-for-client" class="slide level2">
 <h2>Starting Project for Client</h2>
+<figure>
+<img src="images/SimpleProject.svg" alt="Simple Project" /><figcaption>Simple Project</figcaption>
+</figure>
+</section><section class="slide level2">
+
 <ol type="1">
 <li>Make architectural decisions</li>
 <li>Estimate effort, schedule, budget</li>
-<li>Start project implementation</li>
+<li>Implement</li>
 </ol>
-</section><section id="starting-risky-project-for-client" class="slide level2">
-<h2>Starting Risky Project for Client</h2>
+</section><section id="what-if" class="slide level2">
+<h2>What If?</h2>
+<figure>
+<img src="images/DistributedBigPicture.svg" alt="Distributed System" /><figcaption>Distributed System</figcaption>
+</figure>
+</section><section class="slide level2">
+
 <ol type="1">
 <li>Make architectural decisions</li>
 <li><strong>Prototype risky assumptions</strong></li>
 <li><strong>Revise or confirm decisions</strong></li>
 <li>Estimate effort, schedule, budget</li>
-<li>Start project implementation</li>
+<li>Implement</li>
 </ol>
-</section><section id="what-clients-want" class="slide level2">
-<h2>What Clients Want</h2>
-<ul>
-<li>Peace of Mind</li>
-<li>Bang for The Buck</li>
-<li>Feel in Control</li>
-</ul>
 </section><section id="whats-the-challenge" class="slide level2">
 <h2>What's The Challenge</h2>
-<p>Time's short, there are lots of moving parts and unknowns, still the implemented system <em>must</em> run at the end of the day.</p>
+<ul>
+<li>Time's short</li>
+<li>Lots of moving parts and unknowns,</li>
+<li>Prototype <em>must</em> work.</li>
+</ul>
+</section></section>
+<section><section id="technology-for-prototyping" class="titleslide slide level1"><h1>Technology for Prototyping</h1></section><section id="environment-fly-in-cloud" class="slide level2">
+<h2>Environment: Fly in Cloud!</h2>
+<p>Amazon AWS or similar Cloud environment rules:</p>
+<ul>
+<li>API to script and automate (reproducible!)</li>
+<li>Quick provisioning resources is a King</li>
+<li>Use available services when possible instead of manual installation</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">ecs <span class="op">=</span> boto3.client(<span class="st">&#39;ecs&#39;</span>)
+        response <span class="op">=</span> ecs.run_task(
+            cluster<span class="op">=</span><span class="st">&#39;poc-jmeters&#39;</span>,
+            taskDefinition<span class="op">=</span><span class="st">&#39;jmeter&#39;</span>,
+            overrides<span class="op">=</span>overrides,
+            count<span class="op">=</span>task_count,
+            startedBy<span class="op">=</span>hostname,
+            placementStrategy<span class="op">=</span>placement_strategy)</code></pre></div>
+</section><section id="deployment---containerize" class="slide level2">
+<h2>Deployment - Containerize!</h2>
+<div class="sourceCode"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span class="kw">FROM</span> frolvlad/alpine-oraclejdk8
+<span class="kw">VOLUME</span> /tmp
+<span class="kw">VOLUME</span> /config
+<span class="kw">ADD</span> poc-service-1.0-SNAPSHOT.jar app.jar
+<span class="kw">RUN</span> sh -c <span class="st">&#39;touch /app.jar&#39;</span>
+<span class="kw">ENV</span> JAVA_OPTS=<span class="st">&quot;&quot;</span>
+<span class="kw">ENTRYPOINT</span> [ <span class="st">&quot;sh&quot;</span>, <span class="st">&quot;-c&quot;</span>, <span class="st">&quot;java $JAVA_OPTS </span>\
+<span class="st">-Djava.security.egd=file:/dev/./urandom -jar /app.jar&quot;</span> ]</code></pre></div>
+</section><section id="operations---script" class="slide level2">
+<h2>Operations - Script!</h2>
+<ul>
+<li>Counter-intuitive: spend time to script and automate operations</li>
+<li>Continuous Integration: everyone knows how to Jenkins</li>
+</ul>
+</section><section class="slide level2">
+
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="at">@task</span>
+<span class="kw">def</span> configure_kafka_cluster(ctx, restart_docker<span class="op">=</span><span class="va">False</span>):
+    kafka_node_instances <span class="op">=</span> get_cluster_instances(<span class="st">&#39;poc-kafka&#39;</span>)
+    zoo_cfgs <span class="op">=</span> compose_kafka_node_zoo_cfg(ctx, kafka_node_instances)
+    kafka_cfgs <span class="op">=</span> compose_kafka_node_kafka_cfg(ctx, kafka_node_instances)
+    <span class="cf">for</span> zoo, kafka <span class="kw">in</span> <span class="bu">zip</span>(zoo_cfgs, kafka_cfgs):
+        index, ip, zoo_cfg <span class="op">=</span> zoo
+        kafka_cfg <span class="op">=</span> kafka[<span class="dv">2</span>]
+        <span class="cf">with</span> ssh_proxy_bastion(ctx, ip) <span class="im">as</span> ssh_connection:
+            ssh_connection.send_command(
+                <span class="st">&#39;sudo mkdir -p /data/kafka_data&#39;</span>,
+                <span class="st">&#39;sudo mkdir -p /data/kafka_conf&#39;</span>,
+                <span class="st">&#39;sudo mkdir -p /data/kafka_logs&#39;</span>,
+                <span class="st">&#39;sudo mkdir -p /data/zookeeper_data&#39;</span>,
+                <span class="st">&#39;sudo sh -c </span><span class="ch">\&#39;</span><span class="st">printf </span><span class="sc">{}</span><span class="st"> &gt; /data/zookeeper_data/myid</span><span class="ch">\&#39;</span><span class="st">&#39;</span>.<span class="bu">format</span>(index),
+                <span class="st">&#39;sudo mkdir -p /data/zookeeper_data_logs&#39;</span>,
+                <span class="st">&#39;sudo mkdir -p /data/zookeeper_logs&#39;</span>,
+                <span class="st">&#39;sudo mkdir -p /data/zookeeper_conf&#39;</span>,
+                <span class="st">&#39;sudo sh -c </span><span class="ch">\&#39;</span><span class="st">printf &quot;</span><span class="sc">{}</span><span class="st">&quot; &gt; /data/zookeeper_conf/zoo.cfg</span><span class="ch">\&#39;</span><span class="st">&#39;</span>.<span class="bu">format</span>(zoo_cfg),
+                <span class="st">&#39;sudo sh -c </span><span class="ch">\&#39;</span><span class="st">printf &quot;</span><span class="sc">{}</span><span class="st">&quot; &gt; /data/kafka_conf/server.properties</span><span class="ch">\&#39;</span><span class="st">&#39;</span>.<span class="bu">format</span>(kafka_cfg),
+                <span class="st">&quot;sudo stop ecs&quot;</span> <span class="cf">if</span> restart_docker <span class="cf">else</span> <span class="st">&quot;:&quot;</span>,
+                <span class="st">&quot;sudo service docker restart&quot;</span> <span class="cf">if</span> restart_docker <span class="cf">else</span> <span class="st">&quot;:&quot;</span>,
+                <span class="st">&quot;sudo start ecs&quot;</span> <span class="cf">if</span> restart_docker <span class="cf">else</span> <span class="st">&quot;:&quot;</span>)</code></pre></div>
+</section><section id="languages-frameworks-cots---take-shortcuts" class="slide level2">
+<h2>Languages, Frameworks, COTS - Take Shortcuts!</h2>
+<ul>
+<li>Quick Start: Spring Boot, Django, RoR, et al.</li>
+<li>COTS: Trial Licenses and Free</li>
+<li>Integration: Kafka, RabbitMQ, JMS, REST</li>
+<li>Great API rules: Elasticsearch - REST, RDBMS - SQL over JDBC/DB API/etc. good client libs...</li>
+</ul>
 </section></section>
 <section><section id="prototype-development-life-cycle" class="titleslide slide level1"><h1>Prototype Development Life Cycle</h1></section><section id="team" class="slide level2">
 <h2>Team</h2>
 <ul>
 <li>Small: 1 to 5 people</li>
 <li>Technical Experts, Productive, Communicators, Self-structured</li>
+</ul>
+</section><section id="collaboration" class="slide level2">
+<h2>Collaboration</h2>
+<ul>
+<li>GitHub, GitLab, GitSomething with frequent commits</li>
+<li>Google Drive, Dropbox, Office 365 for documentation editing</li>
+<li>Better still Markdown and similar document formats right in the repository</li>
 </ul>
 </section><section id="process" class="slide level2">
 <h2>Process</h2>
@@ -80,41 +202,9 @@
 <li>No Big Bang - Iterative Delivery</li>
 </ul>
 </section></section>
-<section><section id="technology-for-prototyping" class="titleslide slide level1"><h1>Technology for Prototyping</h1></section><section id="operations" class="slide level2">
-<h2>Operations</h2>
-<ul>
-<li>Counter-intuitive: spend time to script and automate operations</li>
-<li>Continuous Integration</li>
-<li>Use Git, collaborative editing for documents and status tracking
-<ul>
-<li>Google Drive, Dropbox, Office 365</li>
-<li>Better still Markdown and similar document formats right in the repository</li>
-</ul></li>
-</ul>
-</section><section id="environment" class="slide level2">
-<h2>Environment</h2>
-<ul>
-<li>Quick provisioning and de-provisioning of resources is a King</li>
-<li>Amazon AWS or similar Cloud environment rules:
-<ul>
-<li>API to script and automate (reproducible!)</li>
-<li>Relatively reliable</li>
-<li>Use available services when possible instead of manual installation</li>
-</ul></li>
-</ul>
-</section><section id="deployment" class="slide level2">
-<h2>Deployment</h2>
-<p>Docker</p>
-</section><section id="languages-frameworks-cots" class="slide level2">
-<h2>Languages, Frameworks, COTS</h2>
-<p>Spring Boot, Trial Licenses</p>
-</section></section>
-<section><section id="end-of-story" class="titleslide slide level1"><h1>End of Story</h1></section></section>
-<section><section id="throw-away" class="titleslide slide level1"><h1>Throw Away</h1></section><section class="slide level2">
-
-<figure>
-<img src="images/spaghetti.jpg" alt="picture of spaghetti" /><figcaption>picture of spaghetti</figcaption>
-</figure>
+<section><section id="end-of-story" class="titleslide slide level1"><h1>End of Story</h1></section><section id="available-at-github" class="slide level2">
+<h2>Available at GitHub</h2>
+<p><a href="https://github.com/ashapochka/talk-efficient-prototyping">ashapochka/talk-efficient-prototyping</a></p>
 </section></section>
     </div>
   </div>
